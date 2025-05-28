@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Etika e Inteligjencës Artificiale</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      background: #121212;
+      color: #f8f8f2;
+      font-family: 'Montserrat', sans-serif;
+      transition: background-color 0.5s, color 0.5s;
+    }
+    body.light-theme {
+      background: #f0f0f3;
+      color: #222;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 3rem;
+      background: #282a36;
+      box-shadow: 0 2px 15px rgba(80, 250, 123, 0.25);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      transition: background-color 0.5s;
+    }
+    body.light-theme nav {
+      background: #fff;
+      box-shadow: 0 2px 20px rgba(255, 121, 198, 0.2);
+    }
+    .logo {
+      font-weight: 700;
+      font-size: 1.6rem;
+      color: #50fa7b;
+      letter-spacing: 2px;
+      user-select: none;
+      cursor: default;
+      transition: color 0.5s;
+    }
+    body.light-theme .logo {
+      color: #ff79c6;
+    }
+    ul.menu {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+    }
+    ul.menu li a,
+    ul.menu li button {
+      color: #f8f8f2;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.4rem 0.7rem;
+      border-radius: 10px;
+      transition: background-color 0.3s, color 0.3s;
+      user-select: none;
+      font-family: 'Montserrat', sans-serif;
+    }
+    ul.menu li a:hover,
+    ul.menu li button:hover {
+      background: #50fa7b;
+      color: #282a36;
+      box-shadow: 0 0 10px #50fa7baa;
+    }
+    body.light-theme ul.menu li a,
+    body.light-theme ul.menu li button {
+      color: #222;
+    }
+    body.light-theme ul.menu li a:hover,
+    body.light-theme ul.menu li button:hover {
+      background: #ff79c6;
+      color: #fff;
+      box-shadow: 0 0 12px #ff79c6aa;
+    }
+    .hero {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 70vh;
+      text-align: center;
+      padding: 0 2rem;
+      background: linear-gradient(135deg, #50fa7b 0%, #ff79c6 100%);
+      color: #282a36;
+      font-weight: 700;
+      font-size: 2.8rem;
+      letter-spacing: 3px;
+      user-select: none;
+      position: relative;
+      overflow: hidden;
+    }
+    body.light-theme .hero {
+      background: linear-gradient(135deg, #ff79c6 0%, #50fa7b 100%);
+      color: #282a36;
+    }
+    .hero p {
+      font-weight: 500;
+      font-size: 1.2rem;
+      margin-top: 1rem;
+      color: inherit;
+      max-width: 650px;
+    }
+    #popupTrigger {
+      margin-top: 2rem;
+      padding: 0.8rem 2rem;
+      font-weight: 700;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
+      color: #282a36;
+      background: #fff;
+      box-shadow: 0 0 15px #fffaaa88;
+      transition: background-color 0.3s, box-shadow 0.3s;
+      user-select: none;
+    }
+    #popupTrigger:hover {
+      background: #f0f0f0;
+      box-shadow: 0 0 25px #fffaaaee;
+    }
+    main {
+      max-width: 1100px;
+      margin: 4rem auto;
+      padding: 0 1.5rem;
+      margin-left: 270px; /* Adjusted for sidebar */
+    }
+    section.section {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-bottom: 5rem;
+      flex-wrap: wrap;
+    }
+    section.section:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+    .text-block {
+      flex: 1 1 450px;
+      max-width: 600px;
+      line-height: 1.6;
+    }
+    .text-block h2 {
+      font-weight: 700;
+      font-size: 2.1rem;
+      margin-bottom: 1rem;
+      color: #50fa7b;
+      user-select: none;
+      transition: color 0.5s;
+    }
+    body.light-theme .text-block h2 {
+      color: #ff79c6;
+    }
+    .text-block p {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      color: inherit;
+    }
+    .text-block button.learn-more-btn {
+      padding: 0.6rem 1.4rem;
+      border-radius: 12px;
+      border: none;
+      background: #50fa7b;
+      color: #282a36;
+      font-weight: 700;
+      cursor: pointer;
+      user-select: none;
+      box-shadow: 0 0 12px #50fa7bbb;
+      transition: background-color 0.3s, box-shadow 0.3s;
+    }
+    .text-block button.learn-more-btn:hover {
+      background: #44d06c;
+      box-shadow: 0 0 18px #44d06cbb;
+      color: #fff;
+    }
+    body.light-theme .text-block button.learn-more-btn {
+      background: #ff79c6;
+      color: #222;
+      box-shadow: 0 0 12px #ff79c6bb;
+    }
+    body.light-theme .text-block button.learn-more-btn:hover {
+      background: #e85ca9;
+      box-shadow: 0 0 18px #e85ca9bb;
+      color: #fff;
+    }
+    .image-block {
+      flex: 1 1 400px;
+      max-width: 600px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 0 40px #50fa7baa;
+      transition: box-shadow 0.5s;
+    }
+    body.light-theme .image-block {
+      box-shadow: 0 0 40px #ff79c6aa;
+    }
+    .image-block img {
+      width: 100%;
+      display: block;
+      border-radius: 20px;
+      user-select: none;
+    }
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(40, 42, 54, 0.9);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 20;
+      backdrop-filter: blur(12px);
+      transition: opacity 0.3s;
+    }
+    .modal-content {
+      width: 90vw;
+      height: 80vh;
+      background: #282a36;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 0 25px #50fa7bcc;
+      transition: background-color 0.5s;
+    }
+    body.light-theme .modal-content {
+      background: #fff;
+      box-shadow: 0 0 30px #ff79c6cc;
+    }
+    .modal-header {
+      padding: 1rem 1.5rem;
+      background: #50fa7b;
+      display: flex;
+      justify-content: flex-end;
+      user-select: none;
+    }
+    body.light-theme .modal-header {
+      background: #ddd;
+    }
+    .modal-close-btn {
+      background: #ff5555;
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      font-weight: 700;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #ff5555aa;
+      transition: background-color 0.3s, box-shadow 0.3s;
+      user-select: none;
+    }
+    .modal-close-btn:hover {
+      background: #ff2222;
+      box-shadow: 0 0 15px #ff2222cc;
+    }
+    body.light-theme .modal-close-btn {
+      background: #ff79c6;
+      color: #222;
+      box-shadow: 0 0 12px #ff79c6cc;
+    }
+    body.light-theme .modal-close-btn:hover {
+      background: #ff4ea6;
+      box-shadow: 0 0 18px #ff4ea6cc;
+      color: #fff;
+    }
+    .theme-toggle {
+      background: #50fa7b;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 12px;
+      color: #282a36;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 1rem;
+      user-select: none;
+      transition: background-color 0.4s, color 0.4s, box-shadow 0.4s;
+      box-shadow: 0 0 12px #50fa7bbb;
+    }
+    .theme-toggle:hover {
+      background: #44d06c;
+      box-shadow: 0 0 18px #44d06cbb;
+    }
+    body.light-theme .theme-toggle {
+      background: #ff79c6;
+      color: #222;
+      box-shadow: 0 0 12px #ff79c6bb;
+    }
+    body.light-theme .theme-toggle:hover {
+      background: #e85ca9;
+      box-shadow: 0 0 18px #e85ca9bb;
+      color: #fff;
+    }
+    .side-glow-left,
+    .side-glow-right {
+      pointer-events: none;
+      position: fixed;
+      top: 0;
+      width: 120px;
+      height: 100vh;
+      z-index: 5;
+      filter: blur(60px);
+      opacity: 0.14;
+      transition: opacity 0.5s ease;
+    }
+    .side-glow-left {
+      left: 0;
+      background: linear-gradient(180deg, #50fa7b, #ff79c6);
+    }
+    .side-glow-right {
+      right: 0;
+      background: linear-gradient(180deg, #ff79c6, #50fa7b);
+    }
+    body.light-theme .side-glow-left {
+      background: linear-gradient(180deg, #a1f2b6, #f5a1d1);
+      opacity: 0.12;
+    }
+    body.light-theme .side-glow-right {
+      background: linear-gradient(180deg, #f5a1d1, #a1f2b6);
+      opacity: 0.12;
+    }
+    iframe {
+      flex: 1;
+      border: none;
+      border-radius: 0 0 20px 20px;
+      width: 100%;
+      height: 100%;
+      user-select: none;
+    }
+    /* Sidebar Styles */
+    .sidebar {
+      width: 250px;
+      background: #282a36;
+      color: #f8f8f2;
+      padding: 1rem;
+      position: fixed;
+      top: 80px; /* Adjust based on your nav height */
+      left: 0;
+      height: calc(100% - 80px); /* Full height minus nav */
+      overflow-y: auto; /* Scroll if content overflows */
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    }
+    .sidebar h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+    .sidebar ul li {
+      margin: 0.5rem 0;
+    }
+    .sidebar ul li a {
+      color: #50fa7b;
+      text-decoration: none;
+    }
+    .sidebar ul li a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">Etika AI</div>
+    <ul class="menu">
+      <li><a href="#home">Basa</a></li>
+      <li><a href="#topics">Tema</a></li>
+      <li><a href="#impact">Ndikimi</a></li>
+      <li><button id="navLearnMoreBtn" class="learn-more-btn" data-url="https://sq.wikipedia.org/wiki/Etika_e_inteligjencës_artificiale">Mëso më shumë</button></li>
+      <li><button id="themeToggle" class="theme-toggle">Modi i Dritës</button></li>
+    </ul>
+  </nav>
+  <div class="side-glow-left"></div>
+  <div class="side-glow-right"></div>
+  
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>Informacione Shtesë</h2>
+    <ul>
+      <li><a href="#topics">Tema</a></li>
+      <li><a href="#impact">Ndikimi</a></li>
+      <li><a href="#section1">Section 1</a></li>
+      <li><a href="#section2">Section 2</a></li>
+      <li><a href="#section3">Section 3</a></li>
+    </ul>
+  </aside>
+
+  <section id="home" class="hero">
+    <div>
+      <h1>Etika e Inteligjencës Artificiale</h1>
+      <p>Të kuptuarit e implikimeve morale dhe sfidave të teknologjive të AI që formësojnë të ardhmen tonë.</p>
+      <button id="popupTrigger" class="learn-more-btn" data-url="https://sq.wikipedia.org/wiki/Etika_e_inteligjencës_artificiale">Mëso më shumë</button>
+    </div>
+  </section>
+  <main>
+    <section id="topics" class="section">
+      <div class="text-block">
+        <h2>Paragjykimi në AI</h2>
+        <p>Paragjykimi në sistemet AI ndodh kur të dhënat e trajnuara ose algoritmet pasqyrojnë paragjykime ekzistuese, duke sjellë rezultate të padrejta. Është thelbësore të sigurohet një trajtim i barabartë për të gjithë.</p>
+        <button class="learn-more-btn" data-url="https://en.wikipedia.org/wiki/Algorithmic_bias">Mëso më shumë</button>
+      </div>
+      <div class="image-block">
+        <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80" alt="Paragjykimi në AI" />
+      </div>
+    </section>
+    <section class="section">
+      <div class="text-block">
+        <h2>Privatësia e të Dhënave</h2>
+        <p>Me AI që trajton një sasi të madhe të dhënash personale, mbrojtja e privatësisë dhe përdorimi etik i të dhënave është kritike për besimin dhe sigurinë e përdoruesve.</p>
+        <button class="learn-more-btn" data-url="https://en.wikipedia.org/wiki/Privacy_concerns_with_artificial_intelligence">Mëso më shumë</button>
+      </div>
+      <div class="image-block">
+        <img src="https://images.unsplash.com/photo-1497493292307-31c376b6e479?auto=format&fit=crop&w=800&q=80" alt="Privatësia e të Dhënave" />
+      </div>
+    </section>
+    <section class="section">
+      <div class="text-block">
+        <h2>Qeverisja dhe Përgjegjësia</h2>
+        <p>Rregullimi dhe kuadri ligjor janë jetikë për përdorimin e përgjegjshëm të AI-së, duke garantuar që teknologjia të përdoret në mënyrë transparente dhe etike.</p>
+        <button class="learn-more-btn" data-url="https://en.wikipedia.org/wiki/Artificial_intelligence_governance">Mëso më shumë</button>
+      </div>
+      <div class="image-block">
+        <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80" alt="Qeverisja AI" />
+      </div>
+    </section>
+    <section id="impact" class="section">
+      <div class="text-block" style="max-width: 100%;">
+        <h2>Ndikimi Social dhe Ekonomik</h2>
+        <p>AI ndryshon tregun e punës dhe marrëdhëniet sociale. Është e rëndësishme të kuptohet ndikimi i saj për të ndërtuar një shoqëri më të drejtë dhe gjithëpërfshirëse.</p>
+        <button class="learn-more-btn">        <button class="learn-more-btn" data-url="https://en.wikipedia.org/wiki/Social_impact_of_artificial_intelligence">Mëso më shumë</button>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button id="backBtn" class="modal-close-btn" title="Kthehu prapa">⬅ Kthehu</button>
+        <button id="modalCloseBtn" class="modal-close-btn" title="Mbyll">✖</button>
+      </div>
+      <iframe src="" id="modalIframe" title="Informacion shtesë"></iframe>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      const modal = document.getElementById('modal');
+      const iframe = document.getElementById('modalIframe');
+      const closeBtn = document.getElementById('modalCloseBtn');
+      const backBtn = document.getElementById('backBtn');
+      const learnMoreButtons = document.querySelectorAll('.learn-more-btn');
+      const themeToggle = document.getElementById('themeToggle');
+      const body = document.body;
+
+      let historyStack = [];
+      let currentUrl = '';
+
+      function openModal(url) {
+        if (!url) return;
+        if (currentUrl) historyStack.push(currentUrl);
+        currentUrl = url;
+        iframe.src = url;
+        modal.style.display = 'flex';
+      }
+
+      function closeModal() {
+        modal.style.display = 'none';
+        iframe.src = '';
+        historyStack = [];
+        currentUrl = '';
+      }
+
+      function goBack() {
+        if (historyStack.length > 0) {
+          currentUrl = historyStack.pop();
+          iframe.src = currentUrl;
+        } else {
+          closeModal();
+        }
+      }
+
+      learnMoreButtons.forEach(btn => {
+        btn.addEventListener('click', e => {
+          const url = e.currentTarget.getAttribute('data-url');
+          openModal(url);
+        });
+      });
+
+      closeBtn.addEventListener('click', closeModal);
+      backBtn.addEventListener('click', goBack);
+
+      modal.addEventListener('click', e => {
+        if (e.target === modal) closeModal();
+      });
+
+      function setTheme(theme) {
+        if (theme === 'light') {
+          body.classList.add('light-theme');
+          themeToggle.textContent = 'Modi i Errët';
+          localStorage.setItem('theme', 'light');
+        } else {
+          body.classList.remove('light-theme');
+          themeToggle.textContent = 'Modi i Dritës';
+          localStorage.setItem('theme', 'dark');
+        }
+      }
+
+      themeToggle.addEventListener('click', () => {
+        if (body.classList.contains('light-theme')) {
+          setTheme('dark');
+        } else {
+          setTheme('light');
+        }
+      });
+
+      // Load theme from localStorage
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        setTheme(savedTheme);
+      } else {
+        setTheme('dark');
+      }
+    })();
+  </script>
+</body>
+</html>
